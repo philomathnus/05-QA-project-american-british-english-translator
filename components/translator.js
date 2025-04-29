@@ -61,38 +61,35 @@ class Translator {
         return translatedWords;
     }
 
-    isTimeString(str) {
-        const regexp = /^(2[0-3]|[01]?[0-9])[:.]([0-5]?[0-9])$/;
-        console.log(`str: ${str}  result: ${regexp.test(str)}`);
-        return regexp.test(str);
-    }
-
-    translateTimeString(words, translationLocale) {
-        const newWords = [];
-
-        words.forEach(word => {
-            console.log(`word: ${word}`);
-            if (this.isTimeString(word)) {
-                switch (translationLocale) {
-                    case 'american-to-british':
-                        newWords.push(word.replaceAll(':', '.'));
-                        break;
-                    case 'british-to-american':
-                        newWords.push(word.replaceAll('.', ':'));
-                        break;
-                    default:
-                        newWords.push(word);
-                }
-            } else {
-                newWords.push(word);
+    replaceTimeStrings(text, translationLocale) {
+        const regexp = new RegExp(/2[0-3]|[01]?[0-9][:.][0-5]?[0-9]/g);
+        let textWithCorrectTime = text;
+        if (regexp.test(text)) {
+            const wordsToReplace = text.match(regexp);
+            switch (translationLocale) {
+                case 'american-to-british':
+                    wordsToReplace.forEach(word => {
+                        textWithCorrectTime = textWithCorrectTime.replace(word, word.replace(':', '.'));
+                    });
+                    break;
+                case 'british-to-american':
+                    wordsToReplace.forEach(word => {
+                        textWithCorrectTime = textWithCorrectTime.replace(word, word.replace('.', ':'));
+                    });
+                    break;
+                default:
+                    textWithCorrectTime = text;
             }
-        });
-        return newWords;
+            return textWithCorrectTime;
+        } else {
+            return text;
+        }
     }
 
     translate(textToTranslate, translationLocale) {
-        let wordsToTranslate = textToTranslate.split(/(?=[\s,.?])|(?<=[\s,.?])/g);
-        wordsToTranslate = this.translateTimeString(wordsToTranslate, translationLocale);
+        const text = this.replaceTimeStrings(textToTranslate, translationLocale);
+        let wordsToTranslate = text.split(/\s/g);
+        wordsToTranslate = wordsToTranslate.join(' ').split(/(?=[\s,.?])|(?<=[\s,.?])/g);
         switch (translationLocale) {
             case 'american-to-british':
                 return this.doTranslate(wordsToTranslate, [], this.allAmericanToBritish, americanToBritishTitles).join('');
