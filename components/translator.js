@@ -100,6 +100,24 @@ class Translator {
         }
     }
 
+    highlight(orgText, translatedText) {
+        const orgWords = orgText.split(/\s/g);
+        const translatedWords = translatedText.split(/\s/g);
+        const highlightedWords = translatedWords.map((translatedWord) => {
+            if (!orgWords.includes(translatedWord)) {
+                return `<span class="highlight">${translatedWord}</span>`;
+            } else {
+                return translatedWord;
+            }
+        });
+        return highlightedWords.join(' ');
+    }
+
+    translateAndHighlight(textToTranslate, translationLocale) {
+        const translatedText = this.translate(textToTranslate, translationLocale);
+        const highlightedText = this.highlight(textToTranslate, translatedText);
+    }
+
 }
 
 module.exports = Translator;

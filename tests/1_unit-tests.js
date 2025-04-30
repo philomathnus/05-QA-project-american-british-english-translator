@@ -112,6 +112,29 @@ suite('Unit Tests', () => {
     });
 
     suite('Highlight translation', () => {
-
+        test('Highlight translation in Mangoes are my favorite fruit.', () => {
+            const orgText = 'Mangoes are my favorite fruit.';
+            const textToHighlight = 'Mangoes are my favourite fruit.';
+            const expectedResult = 'Mangoes are my <span class="highlight">favourite</span> fruit.';
+            assert.equal(translator.highlight(orgText, textToHighlight), expectedResult);
+        });
+        test('Highlight translation in I ate yogurt for breakfast.', () => {
+            const orgText = 'I ate yogurt for breakfast.';
+            const textToHighlight = 'I ate yoghurt for breakfast.';
+            const expectedResult = 'I ate <span class="highlight">yoghurt</span> for breakfast.';
+            assert.equal(translator.highlight(orgText, textToHighlight), expectedResult);
+        });
+        test('Highlight translation in We watched the footie match for a while.', () => {
+            const orgText = 'We watched the footie match for a while.';
+            const textToHighlight = 'We watched the soccer match for a while.';
+            const expectedResult = 'We watched the <span class="highlight">soccer</span> match for a while.';
+            assert.equal(translator.highlight(orgText, textToHighlight), expectedResult);
+        });
+        test('Highlight translation in Paracetamol takes up to an hour to work.', () => {
+            const orgText = 'Paracetamol takes up to an hour to work.';
+            const textToHighlight = 'Tylenol takes up to an hour to work.';
+            const expectedResult = '<span class="highlight">Tylenol</span> takes up to an hour to work.';
+            assert.equal(translator.highlight(orgText, textToHighlight), expectedResult);
+        });
     });
 });
