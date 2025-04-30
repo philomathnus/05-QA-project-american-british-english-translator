@@ -9,10 +9,10 @@ module.exports = function (app) {
 
   app.route('/api/translate')
     .post((req, res) => {
-      if (!Object.hasOwn(req.body, "text-input") || !Object.hasOwn(req.body, "locale")) {
+      if (!Object.hasOwn(req.body, "text") || !Object.hasOwn(req.body, "locale")) {
         res.json({ error: 'Required field(s) missing' });
       } else {
-        const textToTranslate = req.body["text-input"];
+        const textToTranslate = req.body.text;
         const locale = req.body.locale;
         
         if (!textToTranslate) {

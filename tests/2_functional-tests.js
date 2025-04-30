@@ -19,7 +19,7 @@ suite('Functional Tests', () => {
             .post('/api/translate')
             .type('form')
             .send({
-                "text-input": orgText,
+                "text": orgText,
                 "locale": 'british-to-american'
             })
             .end((err, res) => {
@@ -38,7 +38,7 @@ suite('Functional Tests', () => {
             .post('/api/translate')
             .type('form')
             .send({
-                "text-input": orgText,
+                "text": orgText,
                 "locale": 'hebrew'
             })
             .end((err, res) => {
@@ -73,7 +73,7 @@ suite('Functional Tests', () => {
             .post('/api/translate')
             .type('form')
             .send({
-                "text-input": 'some text'
+                "text": 'some text'
             })
             .end((err, res) => {
                 assert.equal(res.status, 200);
@@ -90,7 +90,7 @@ suite('Functional Tests', () => {
             .post('/api/translate')
             .type('form')
             .send({
-                "text-input": '',
+                "text": '',
                 locale: 'american-to-british'
             })
             .end((err, res) => {
@@ -110,7 +110,7 @@ suite('Functional Tests', () => {
             .post('/api/translate')
             .type('form')
             .send({
-                "text-input": orgText,
+                "text": orgText,
                 "locale": 'american-to-british'
             })
             .end((err, res) => {
