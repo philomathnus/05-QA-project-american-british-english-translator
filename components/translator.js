@@ -116,6 +116,7 @@ class Translator {
     translateAndHighlight(textToTranslate, translationLocale) {
         const translatedText = this.translate(textToTranslate, translationLocale);
         const highlightedText = this.highlight(textToTranslate, translatedText);
+        return highlightedText;
     }
 
 }
